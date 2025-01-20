@@ -1,33 +1,37 @@
 #include <iostream>
-#include <stack>
 #include <unordered_map>
+#include <string>
 
-bool isValid(std::string s) {
-    std::stack<char> stack;
-    // Map for matching brackets
-    std::unordered_map<char, char> matchingBrackets = {
+
+class Solution {
+public:
+    bool isValid(string s) {
+        std::stack<char> stack;
+
+        std::unordered_map<char, char> pairs = { 
         {')', '('},
         {'}', '{'},
         {']', '['}
-    };
-
-    for (char ch : s) {
-        // If it's a closing bracket
-        if (matchingBrackets.count(ch)) {
-            // Check if the stack is empty or the top element doesn't match
-            if (stack.empty() || stack.top() != matchingBrackets[ch]) {
-                return false;
-            }
-            stack.pop(); // Pop the matching opening bracket
-        } else {
-            // Push opening brackets onto the stack
-            stack.push(ch);
+};
+        for (char ch : s) {
+            // checks if it's a closing bracket by verifying if this is a key, if not, it returns 0, meaning false
+              if (pairs.count(ch)) {
+                // check if the stack is empty or the top element doesnt match
+                if (stack.empty() || stack.top() != pairs[ch]) {
+                    return false;
+                }
+                stack.pop(); // if we did find a corresponding value, we can pop the top off the stack
+                } else {
+                    stack.push(ch);
+              }
         }
+        // if the stack is empty, all brackets were matched
+        return stack.empty();
     }
+};
 
-    // If the stack is empty, all brackets were matched
-    return stack.empty();
-}
+
+//s = "[]"
 
 int main() {
     std::string input;
